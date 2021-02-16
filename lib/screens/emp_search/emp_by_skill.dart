@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../reusables/reusable_emp_card.dart';
+import '../../reusables/reusable_emp_card.dart';
 
 class EmpSkill extends StatefulWidget {
   EmpSkill({this.skill});
@@ -15,13 +15,14 @@ class _EmpSkillState extends State<EmpSkill> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.yellow[100],
       appBar: AppBar(
         title: Text(
           'Employees',
           style: TextStyle(fontSize: 30),
         ),
         centerTitle: true,
-        backgroundColor: Colors.lightBlue,
+        backgroundColor: Colors.purple,
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: _firestore.collection('data').snapshots(),

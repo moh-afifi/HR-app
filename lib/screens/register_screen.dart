@@ -4,7 +4,7 @@ import '../components/rounded_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import '../components/bloc.dart';
-import 'home.dart';
+import 'package:emp/screens/home_page.dart';
 import 'package:connectivity/connectivity.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -21,8 +21,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xffF7F7F7),
         appBar: AppBar(
+          backgroundColor: Colors.purple,
           centerTitle: true,
           title: Text(
             "Register",
@@ -36,7 +37,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 padding: EdgeInsets.all(20),
                 children: <Widget>[
                   Image(
-                    image: AssetImage('images/logo2.jpg'),
+                    image: AssetImage('images/icon.png'),
                     height: 300,
                     width: 200,
                   ),
@@ -76,7 +77,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   ),
                   RoundedButton(
                     title: 'Register',
-                    colour: Colors.blueAccent,
+                    colour: Colors.teal,
                     onPressed: () async {
                       var connectivityResult = await (Connectivity().checkConnectivity());
 
@@ -91,7 +92,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => Department(),
+                              builder: (context) => Home(),
                             ),
                           );
                         }

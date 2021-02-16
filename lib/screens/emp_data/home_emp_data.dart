@@ -1,10 +1,10 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
-import '../reusables/reusable_dept_card.dart';
+import '../../reusables/reusable_dept_card.dart';
 import 'package:emp/screens/emp_search/search_by_date.dart';
 import 'package:emp/screens/emp_search/search_by_skill.dart';
 import 'package:emp/components/rounded_button.dart';
-import 'dart:io';
-import 'package:emp/screens/department_emps.dart';
+import 'package:emp/screens/emp_data/department_emps.dart';
 
 class HomeEmpData extends StatefulWidget {
   @override
@@ -16,31 +16,47 @@ class _HomeEmpDataState extends State<HomeEmpData> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.yellow[100],
       appBar: AppBar(
-        backgroundColor: Colors.lightBlue,
+        backgroundColor: Colors.purple,
         centerTitle: true,
         title: Text(
           "Home",
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
         ),
       ),
-      body: Column(
+      body:  Builder(
+        builder: (context) => Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           ReusableDepartment(
-            text: 'IOT & GIS - 11',
+            text: 'IOT & GIS',
             icon: Icons.wifi,
-            color: Colors.yellow,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DeptEmps(
-                    department: 'IOT & GIS',
+            color: Colors.blueAccent,
+            onTap: () async{
+              var connectivityResult =
+              await (Connectivity().checkConnectivity());
+              if ((connectivityResult != ConnectivityResult.mobile) &&
+                  (connectivityResult != ConnectivityResult.wifi)) {
+                Scaffold.of(context).showSnackBar(new SnackBar(
+                  backgroundColor: Colors.black,
+                  duration: Duration(seconds: 2),
+                  content: Text(
+                    "No internet Connection !",
+                    style: TextStyle(fontSize: 17),
                   ),
-                ),
-              );
+                ));
+              }else{
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DeptEmps(
+                      department: 'IOT & GIS',
+                    ),
+                  ),
+                );
+              }
             },
           ),
           //SizedBox(height: 10,),
@@ -51,18 +67,32 @@ class _HomeEmpDataState extends State<HomeEmpData> {
           ),
           ///////////////////////////////////////////////////////////////////////////////////
           ReusableDepartment(
-            text: 'Development - 27',
+            text: 'Development',
             icon: Icons.android,
-            color: Colors.lightGreenAccent,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DeptEmps(
-                    department: 'Development',
+            color: Colors.teal,
+            onTap: () async{
+              var connectivityResult =
+              await (Connectivity().checkConnectivity());
+              if ((connectivityResult != ConnectivityResult.mobile) &&
+                  (connectivityResult != ConnectivityResult.wifi)) {
+                Scaffold.of(context).showSnackBar(new SnackBar(
+                  backgroundColor: Colors.black,
+                  duration: Duration(seconds: 2),
+                  content: Text(
+                    "No internet Connection !",
+                    style: TextStyle(fontSize: 17),
                   ),
-                ),
-              );
+                ));
+              }else{
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DeptEmps(
+                      department: 'Development',
+                    ),
+                  ),
+                );
+              }
             },
           ),
           Divider(
@@ -72,18 +102,33 @@ class _HomeEmpDataState extends State<HomeEmpData> {
           ),
           ///////////////////////////////////////////////////////////////////////////////////
           ReusableDepartment(
-            text: 'Cyber Security - 13',
+            text: 'Cyber Security',
             icon: Icons.security,
             color: Colors.red,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DeptEmps(
-                    department: 'Cyber Security',
+            onTap: () async{
+              var connectivityResult =
+              await (Connectivity().checkConnectivity());
+              if ((connectivityResult != ConnectivityResult.mobile) &&
+                  (connectivityResult != ConnectivityResult.wifi)) {
+                Scaffold.of(context).showSnackBar(new SnackBar(
+                  backgroundColor: Colors.black,
+                  duration: Duration(seconds: 2),
+                  content: Text(
+                    "No internet Connection !",
+                    style: TextStyle(fontSize: 17),
                   ),
-                ),
-              );
+                ));
+              }else{
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DeptEmps(
+                      department: 'Cyber Security',
+                    ),
+                  ),
+                );
+              }
+
             },
           ),
           Divider(
@@ -95,67 +140,77 @@ class _HomeEmpDataState extends State<HomeEmpData> {
             height: 10,
           ),
           //---------------------------------------------------------------
-          Text(
-            'Search By :',
-            style: TextStyle(
-                color: Colors.blueAccent,
-                fontSize: 20,
-                fontWeight: FontWeight.bold),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          DropdownButton<String>(
-            isExpanded: true,
-            hint: Text('chooose'),
-            value: searchBy,
-            icon: Icon(Icons.keyboard_arrow_down),
-            iconSize: 24,
-            elevation: 16,
-            onChanged: (String newValue) {
-              setState(() {
-                searchBy = newValue;
-              });
-            },
-            items: <String>['Join Date', 'Skills']
-                .map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
-          ),
-          SizedBox(height: 20,),
-          //--------------------------------------------
-          Center(
-            child: RoundedButton(
-                colour: Colors.teal,
-                title: 'Sreach',
-                onPressed: () {
-                  if (searchBy == 'Join Date') {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SearchDate(),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal:30),
+            child: Column(
+              children: <Widget>[
+                Text(
+                  'Search By :',
+                  style: TextStyle(
+                      color: Colors.blueAccent,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Container(
+                      width:150,
+                      child: DropdownButton<String>(
+                        isExpanded: true,
+                        hint: Text('chooose'),
+                        value: searchBy,
+                        icon: Icon(Icons.keyboard_arrow_down),
+                        iconSize: 24,
+                        elevation: 16,
+                        onChanged: (String newValue) {
+                          setState(() {
+                            searchBy = newValue;
+                          });
+                        },
+                        items: <String>['Join Date', 'Skills']
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
                       ),
-                    );
-                  } else {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SearchSkill(),
-                      ),
-                    );
-                  }
-                }),
+                    ),
+                    SizedBox(width: 20,),
+                    RoundedButton(
+                        colour: Colors.teal,
+                        title: 'Sreach',
+                        onPressed: () {
+                          if (searchBy == 'Join Date') {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SearchDate(),
+                              ),
+                            );
+                          } else {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SearchSkill(),
+                              ),
+                            );
+                          }
+                        }),
+                  ],
+                ),
+              ],
+            ),
           ),
 
-          //------------------------------------------------
-          SizedBox(
-            height: 20,
-          )
+          SizedBox(height: 50,),
+          //--------------------------------------------
         ],
-      ),
+      ),),
     );
   }
 }

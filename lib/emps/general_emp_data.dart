@@ -29,11 +29,12 @@ class _IotEmpDataState extends State<IotEmpData> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.yellow[100],
         appBar: AppBar(
-          backgroundColor: Colors.lightBlue,
+          backgroundColor: Colors.purple,
           centerTitle: true,
           title: Text(
-            "Employee Data",
+            "بيانات الموظف",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
           ),
         ),

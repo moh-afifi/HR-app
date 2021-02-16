@@ -1,4 +1,5 @@
-import 'package:emp/screens/emp_by_skill.dart';
+import 'package:connectivity/connectivity.dart';
+import 'package:emp/screens/emp_search/emp_by_skill.dart';
 import 'package:flutter/material.dart';
 import 'package:emp/components/rounded_button.dart';
 
@@ -14,15 +15,17 @@ class _SearchSkillState extends State<SearchSkill> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.yellow[100],
       appBar: AppBar(
+        backgroundColor: Colors.purple,
         centerTitle: true,
         title: Text(
-          "Search",
+          "choose skill",
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
         ),
       ),
-      body:  Padding(
+      body:  Builder(
+        builder: (context) => Padding(
         padding: EdgeInsets.all(25.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,18 +86,33 @@ class _SearchSkillState extends State<SearchSkill> {
             Center(
               child: RoundedButton(title: 'Search' ,
                   colour: Colors.teal,
-                  onPressed: (){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => EmpSkill(skill: skill,),
-                      ),
-                    );
+                  onPressed: () async{
+                    var connectivityResult =
+                    await (Connectivity().checkConnectivity());
+                    if ((connectivityResult != ConnectivityResult.mobile) &&
+                        (connectivityResult != ConnectivityResult.wifi)) {
+                      Scaffold.of(context).showSnackBar(new SnackBar(
+                        backgroundColor: Colors.black,
+                        duration: Duration(seconds: 2),
+                        content: Text(
+                          "No internet Connection !",
+                          style: TextStyle(fontSize: 17),
+                        ),
+                      ));
+                    }else{
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EmpSkill(skill: skill,),
+                        ),
+                      );
+                    }
+
                   }),
             ),
           ],
         ),
-      ),
+      ),)
     );
   }
 }
